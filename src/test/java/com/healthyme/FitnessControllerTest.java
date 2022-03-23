@@ -22,37 +22,69 @@ public class FitnessControllerTest
     private static Context lambdaContext;
 
     @BeforeAll
-    public static void setup() {
+    public static void setup()
+    {
         lambdaContext = new MockLambdaContext();
         handler = new BaseSpringStreamHandler();
     }
 
+    private void handle( InputStream is, ByteArrayOutputStream os )
+    {
+        try
+        {
+            handler.handleRequest( is, os, lambdaContext );
+            System.out.println( os.toString() );
+        }
+        catch( IOException e )
+        {
+            e.printStackTrace();
+            fail( e.getMessage() );
+        }
+    }
+
     @Disabled
     @Test
-    public void testBMI() {
-        try {
-            InputStream inputStream = new AwsProxyRequestBuilder("/fitness/bmi", HttpMethod.GET)
-                    .header( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
-                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+    public void testBMI()
+    {
+        try
+        {
+            InputStream inputStream = new AwsProxyRequestBuilder( "/fitness/bmi", HttpMethod.GET )
+                    .header( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON )
+                    .header( HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON )
                     .queryString( "age", "25" )
-                    .queryString( "weight","60" )
+                    .queryString( "weight", "60" )
                     .queryString( "height", "150" )
                     .buildStream();
             ByteArrayOutputStream responseStream = new ByteArrayOutputStream();
-            handle(inputStream, responseStream);
-            System.out.println(responseStream.toString());
-        } catch (Exception e) {
+            handle( inputStream, responseStream );
+            System.out.println( responseStream.toString() );
+        }
+        catch( Exception e )
+        {
             e.printStackTrace();
         }
     }
 
-    private void handle(InputStream is, ByteArrayOutputStream os) {
-        try {
-            handler.handleRequest(is, os, lambdaContext);
-            System.out.println(os.toString());
-        } catch ( IOException e) {
+    @Disabled
+    @Test
+    public void testActivityByIntensityLevel()
+    {
+        try
+        {
+            InputStream inputStream = new AwsProxyRequestBuilder( "/fitness/activities", HttpMethod.GET )
+                    .header( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON )
+                    .header( HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON )
+                    .queryString( "intensitylevel", "1" )
+                    .buildStream();
+            ByteArrayOutputStream responseStream = new ByteArrayOutputStream();
+            handle( inputStream, responseStream );
+            System.out.println( responseStream.toString() );
+        }
+        catch( Exception e )
+        {
             e.printStackTrace();
-            fail(e.getMessage());
         }
     }
 }
+
+

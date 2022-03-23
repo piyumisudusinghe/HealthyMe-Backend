@@ -1,5 +1,6 @@
 package com.healthyme.controller;
 
+import com.healthyme.model.Activity;
 import com.healthyme.model.ApiResponse;
 import com.healthyme.model.BMIResult;
 import com.healthyme.service.IFitnessService;
@@ -20,6 +21,12 @@ public class FitnessController implements IFitnessController
     @Override public ResponseEntity<ApiResponse<BMIResult>> getBMIValue( Double age, Double weight, Double height, HttpServletRequest request ) throws IOException, InterruptedException
     {
         ApiResponse<BMIResult> apiResponse = fitnessService.getBMIValue( age, weight, height ).get();
+        return new ResponseEntity( apiResponse, HttpStatus.OK );
+    }
+
+    @Override public ResponseEntity<ApiResponse<Activity>> getActivityByIntensityLevel( Integer intensityLevel, HttpServletRequest request ) throws IOException, InterruptedException
+    {
+        ApiResponse<Activity> apiResponse = fitnessService.getActivityByIntensityLevel( intensityLevel ).get();
         return new ResponseEntity( apiResponse, HttpStatus.OK );
     }
 }

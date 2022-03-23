@@ -1,6 +1,7 @@
 package com.healthyme.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.healthyme.model.Activity;
 import com.healthyme.model.ApiResponse;
 import com.healthyme.model.BMIResult;
 import com.healthyme.util.ExternalURLNamingUtil;
@@ -19,11 +20,22 @@ public class FitnessService implements IFitnessService
     @Override public Optional<ApiResponse<BMIResult>> getBMIValue( Double age, Double weight, Double height ) throws IOException, InterruptedException
     {
         HttpClient httpClient = HttpClient.newHttpClient();
-        HttpRequest httpRequest = HttpUtil.createHttpGetRequest( ExternalURLNamingUtil.constructBMIUrl( age.toString(), weight.toString(), height.toString() ) );
-        HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        HttpRequest httpRequest = HttpUtil.createHttpGetRequest( ExternalURLNamingUtil.getBMIUrl( age.toString(), weight.toString(), height.toString() ) );
+        HttpResponse<String> response = httpClient.send( httpRequest, HttpResponse.BodyHandlers.ofString() );
 
         ObjectMapper mapper = new ObjectMapper();
         ApiResponse<BMIResult> apiResponse = mapper.readValue( response.body(), ApiResponse.class );
+        return Optional.ofNullable( apiResponse );
+    }
+
+    @Override public Optional<ApiResponse<Activity>> getActivityByIntensityLevel( Integer intensityLevel ) throws IOException, InterruptedException
+    {
+        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpRequest httpRequest = HttpUtil.createHttpGetRequest( ExternalURLNamingUtil.getActByIntensityLevelUrl( intensityLevel.toString() ) );
+        HttpResponse<String> response = httpClient.send( httpRequest, HttpResponse.BodyHandlers.ofString() );
+
+        ObjectMapper mapper = new ObjectMapper();
+        ApiResponse<Activity> apiResponse = mapper.readValue( response.body(), ApiResponse.class );
         return Optional.ofNullable( apiResponse );
     }
 }
