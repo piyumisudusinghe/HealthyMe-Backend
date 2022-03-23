@@ -2,6 +2,7 @@ package com.healthyme.controller;
 
 import com.healthyme.model.Activity;
 import com.healthyme.model.BMIResult;
+import com.healthyme.model.BurnedCalorie;
 import com.healthyme.util.EndPointNamingUtil;
 import com.healthyme.util.URLParameterNamingUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,6 +34,15 @@ public interface IFitnessController
     @GetMapping( value = EndPointNamingUtil.ACTIVITY, produces = "application/json")
     public ResponseEntity<com.healthyme.model.ApiResponse<Activity>> getActivityByIntensityLevel(
             @Parameter( description = "Intensity Level", hidden = false, required = true ) @RequestParam( value = URLParameterNamingUtil.INTENSITY_LEVEL ) Integer intensityLevel,
+            HttpServletRequest request
+    ) throws IOException, InterruptedException;
+
+    @Operation(summary = "Get BMI Value", description = "Returning BMI Results", responses = {@ApiResponse(responseCode = "200", description = "BMI")})
+    @GetMapping( value = EndPointNamingUtil.BURNED_CALORIE, produces = "application/json")
+    public ResponseEntity<com.healthyme.model.ApiResponse<BurnedCalorie>> getBurnedCalorieByActivity(
+            @Parameter( description = "Activity minutes", hidden = false, required = true ) @RequestParam( value = URLParameterNamingUtil.ACTIVITY_MINUTES ) Double minutes,
+            @Parameter( description = "Weight", hidden = false, required = true ) @RequestParam( value = URLParameterNamingUtil.WEIGHT ) Double weight,
+            @Parameter( description = "Activity Id", hidden = false, required = true ) @RequestParam( value = URLParameterNamingUtil.ACTIVITY_ID ) String activityId,
             HttpServletRequest request
     ) throws IOException, InterruptedException;
 }

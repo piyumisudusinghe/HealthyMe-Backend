@@ -3,6 +3,7 @@ package com.healthyme.controller;
 import com.healthyme.model.Activity;
 import com.healthyme.model.ApiResponse;
 import com.healthyme.model.BMIResult;
+import com.healthyme.model.BurnedCalorie;
 import com.healthyme.service.IFitnessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,13 @@ public class FitnessController implements IFitnessController
     @Override public ResponseEntity<ApiResponse<Activity>> getActivityByIntensityLevel( Integer intensityLevel, HttpServletRequest request ) throws IOException, InterruptedException
     {
         ApiResponse<Activity> apiResponse = fitnessService.getActivityByIntensityLevel( intensityLevel ).get();
+        return new ResponseEntity( apiResponse, HttpStatus.OK );
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse<BurnedCalorie>> getBurnedCalorieByActivity( Double minutes, Double weight, String activityId, HttpServletRequest request ) throws IOException, InterruptedException
+    {
+        ApiResponse<BurnedCalorie> apiResponse = fitnessService.getBurnedCalorieByActivity( minutes, weight, activityId ).get();
         return new ResponseEntity( apiResponse, HttpStatus.OK );
     }
 }

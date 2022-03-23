@@ -74,7 +74,7 @@ public class FitnessControllerTest
             InputStream inputStream = new AwsProxyRequestBuilder( "/fitness/activities", HttpMethod.GET )
                     .header( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON )
                     .header( HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON )
-                    .queryString( "intensitylevel", "1" )
+                    .queryString( "intensityLevel", "1" )
                     .buildStream();
             ByteArrayOutputStream responseStream = new ByteArrayOutputStream();
             handle( inputStream, responseStream );
@@ -85,6 +85,30 @@ public class FitnessControllerTest
             e.printStackTrace();
         }
     }
+
+    @Disabled
+    @Test
+    public void testBurnedCalorie()
+    {
+        try
+        {
+            InputStream inputStream = new AwsProxyRequestBuilder( "/fitness/burnedcalorie", HttpMethod.GET )
+                    .header( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON )
+                    .header( HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON )
+                    .queryString( "activityId", "bi_1" )
+                    .queryString( "weight", "75" )
+                    .queryString( "activityMin", "25" )
+                    .buildStream();
+            ByteArrayOutputStream responseStream = new ByteArrayOutputStream();
+            handle( inputStream, responseStream );
+            System.out.println( responseStream.toString() );
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 
