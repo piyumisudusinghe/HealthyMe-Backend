@@ -18,4 +18,6 @@ public interface IFitnessService
     Optional<ApiResponse<Activity>> getActivityByIntensityLevel( Integer intensityLevel ) throws IOException, InterruptedException;
 
     Optional<ApiResponse<BurnedCalorie>> getBurnedCalorieByActivity( Double minutes, Double weight, String activityId ) throws IOException, InterruptedException;
+
+    Optional<ApiResponse<List<Activity>>> getAllActivities( ) throws IOException, InterruptedException;
 }

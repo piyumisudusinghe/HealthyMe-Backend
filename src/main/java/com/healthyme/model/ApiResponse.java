@@ -22,4 +22,19 @@ public class ApiResponse<T>
     {
         return data;
     }
+
+    public void setStatus_code( String status_code )
+    {
+        this.status_code = status_code;
+    }
+
+    public void setRequest_result( String request_result )
+    {
+        this.request_result = request_result;
+    }
+
+    public void setData( T data )
+    {
+        this.data = data;
+    }
 }

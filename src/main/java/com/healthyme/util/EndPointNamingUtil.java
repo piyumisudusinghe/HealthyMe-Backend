@@ -7,5 +7,6 @@ public class EndPointNamingUtil
 
     public static final String BMI = "/bmi";
     public static final String ACTIVITY = "/activities";
+    public static final String ALL_ACTIVITY = "/allactivities";
     public static final String BURNED_CALORIE = "/burnedcalorie";
 }

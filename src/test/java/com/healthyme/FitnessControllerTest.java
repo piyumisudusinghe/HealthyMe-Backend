@@ -109,6 +109,26 @@ public class FitnessControllerTest
         }
     }
 
+    @Disabled
+    @Test
+    public void testAllActivity()
+    {
+        try
+        {
+            InputStream inputStream = new AwsProxyRequestBuilder( "/fitness/allactivities", HttpMethod.GET )
+                    .header( HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON )
+                    .header( HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON )
+                    .buildStream();
+            ByteArrayOutputStream responseStream = new ByteArrayOutputStream();
+            handle( inputStream, responseStream );
+            System.out.println( responseStream.toString() );
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 

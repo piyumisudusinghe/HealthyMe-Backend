@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 public class FitnessController implements IFitnessController
@@ -35,6 +36,12 @@ public class FitnessController implements IFitnessController
     public ResponseEntity<ApiResponse<BurnedCalorie>> getBurnedCalorieByActivity( Double minutes, Double weight, String activityId, HttpServletRequest request ) throws IOException, InterruptedException
     {
         ApiResponse<BurnedCalorie> apiResponse = fitnessService.getBurnedCalorieByActivity( minutes, weight, activityId ).get();
+        return new ResponseEntity( apiResponse, HttpStatus.OK );
+    }
+
+    @Override public ResponseEntity<List<ApiResponse<Activity>>> getAllActivities( HttpServletRequest request ) throws IOException, InterruptedException
+    {
+        ApiResponse<List<Activity>> apiResponse = fitnessService.getAllActivities( ).get();
         return new ResponseEntity( apiResponse, HttpStatus.OK );
     }
 }
